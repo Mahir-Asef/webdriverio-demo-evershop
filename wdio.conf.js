@@ -1,3 +1,5 @@
+
+const productPurchase = "./test/sepcs/productPurchase.spec.js";
 exports.config = {
     //
     // ====================
@@ -22,7 +24,8 @@ exports.config = {
     //
     specs: [
         // './test/specs/**/*.js',
-        './script.js'
+        // './script.js',
+        productPurchase
     ],
     // Patterns to exclude.
     exclude: [
@@ -86,7 +89,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    // baseUrl: 'http://localhost:8080',
+    baseUrl: 'https://demo.evershop.io/',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 180000,
@@ -199,8 +202,11 @@ exports.config = {
      * Hook that gets executed before the suite starts
      * @param {object} suite suite details
      */
-    // beforeSuite: function (suite) {
-    // },
+    beforeSuite: async function (suite) {
+        await browser.maximizeWindow();
+        await browser.url(this.baseUrl);
+
+    },
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
@@ -236,8 +242,9 @@ exports.config = {
      * Hook that gets executed after the suite has ended
      * @param {object} suite suite details
      */
-    // afterSuite: function (suite) {
-    // },
+    afterSuite: async function (suite) {
+       await browser.quit();
+    },
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {string} commandName hook command name

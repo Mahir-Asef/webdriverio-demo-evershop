@@ -1,11 +1,18 @@
-const searchLocators = require("./searchLocators");
+const searchLocators = require("./searchlocators");
 
-class searchActions{
-    async clickOnSeacrhIcon(){
-        await searchLocators.searchIcon.click();
-    }
-    async enterSearchIteanName(){
-        await searchLocators.searchInputField.setValue("productName");
-    }
+class SearchActions {
+  async clickOnSearchIcon() {
+    await searchLocators.searchIcon.click();
+  }
+
+  async enterSearchItemName(productName) {
+    await searchLocators.searchInputField.setValue(productName);
+  }
+
+  async search(productName) {
+    await this.clickOnSearchIcon();
+    await this.enterSearchItemName(productName);
+  }
 }
-module.exports = new searchActions();
+
+module.exports = new SearchActions();

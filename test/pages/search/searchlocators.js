@@ -1,11 +1,10 @@
+
+
 class searchLocators {
-    get searchIcon{
+    get searchIcon(){
         return $("//a[@class='search-icon']");
     }
-    get searchInputField{
-        return $("//input[@placeholder='Search']");
-    }
-    get searchInputField{
+    get searchInputField(){
         return $("//input[@placeholder='Search']");
     }
 }
