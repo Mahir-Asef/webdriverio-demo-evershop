@@ -2,19 +2,24 @@ const searchActions = require("../pages/search/searchActions");
 const addToCartActions = require("../pages/addToCart/addToCartActions");
 const checkoutActions = require("../pages/checkout/checkoutActions");
 const utility = require("../utilities/utility");
-const productName = "Nike react phantom run flyknit 2";
+const loginActions = require("../pages/login/loginActions");
+// const productName = "Nike react phantom run flyknit 2";
+var productName = "";
 // const productQty = 2; static
 var productQty;
 var singleProductPrice;
 describe("Demo evershop product purchase journey", () => {
   it("Should able to successfully search product", async () => {
+    const number = await utility.randomNumber(4,1);
+    productName = await searchActions.selectProduct(number);
     await searchActions.clickOnSearchIcon();
     await searchActions.enterSearchItemName(productName);
     await browser.keys("Enter");
   });
   it("Should able to successfully add product in the cart", async () => {
     await addToCartActions.clickOnProductfromList(productName);
-    await addToCartActions.selectProductSize();
+    const number = await utility.randomNumber(2,1);
+    await addToCartActions.selectProductSize(number);
     await addToCartActions.selectColor();
     //dynamic
     productQty = await utility.randomNumber(10,1)
@@ -29,5 +34,10 @@ describe("Demo evershop product purchase journey", () => {
     const actualGrandTotal = await checkoutActions.getGrandTotalAmount();
     expect(expectedTotalPrice).toEqual(actualSubTotal);
     expect(expectedTotalPrice).toEqual(actualGrandTotal);
+  });
+  it.skip("Should able to successfully logout", async () => {
+    await loginActions.clickOnProfileIcon();
+    await loginActions.clickOnLogout();
+    await browser.pause(5000);
   });
 });

@@ -4,8 +4,8 @@ class addToCartActions {
   async clickOnProductfromList(productName) {
     await addToCartLocators.productFromList(productName).click();
   }
-  async selectProductSize() {
-    await addToCartLocators.productSize.click();
+  async selectProductSize(number) {
+    await addToCartLocators.productSize(number).click();
     await browser.pause(3000);
   }
   async selectColor() {

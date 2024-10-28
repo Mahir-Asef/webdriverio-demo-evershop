@@ -1,5 +1,6 @@
 
 const productPurchase = "./test/sepcs/productPurchase.spec.js";
+const auth = './test/sepcs/auth.spec.js';
 exports.config = {
     //
     // ====================
@@ -25,8 +26,15 @@ exports.config = {
     specs: [
         // './test/specs/**/*.js',
         // './script.js',
-        productPurchase
+        productPurchase,
+        // auth
     ],
+    suites: {
+        purchase: [
+            // [auth], 
+         [auth,productPurchase]
+        ],
+      },
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -129,7 +137,11 @@ exports.config = {
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
     // reporters: ['dot'],
-
+    reporters: [['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: false,
+        disableWebdriverScreenshotsReporting: false,
+    }]],
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     mochaOpts: {
@@ -236,7 +248,17 @@ exports.config = {
      */
     // afterTest: function(test, context, { error, result, duration, passed, retries }) {
     // },
-
+    afterTest: async function (
+        test,
+        context,
+        { error, result, duration, passed, retries }
+      ) {
+        if (error) {
+          const screenshot = await browser.takeScreenshot();
+          allure.addAttachment("Screenshot",Buffer.from(screenshot, "base64"),"failure/png"
+          );
+        }
+      },
 
     /**
      * Hook that gets executed after the suite has ended

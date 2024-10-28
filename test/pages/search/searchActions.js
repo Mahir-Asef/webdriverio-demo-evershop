@@ -8,10 +8,12 @@ class SearchActions {
   async enterSearchItemName(productName) {
     await searchLocators.searchInputField.setValue(productName);
   }
-
   async search(productName) {
     await this.clickOnSearchIcon();
     await this.enterSearchItemName(productName);
+  }
+  async selectProduct(num){
+    return await searchLocators.productList(num).getText();
   }
 }
 

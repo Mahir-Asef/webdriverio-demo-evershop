@@ -2,7 +2,7 @@ const checkoutLocators = require("./checkoutLocators.js");
 const utility = require("../../utilities/utility.js");
 class checkoutActions {
   async getSubTotalAmount() {
-    const subTotal = await checkoutLocators.subTotal.getText();
+    const subTotal = await checkoutLocators.subTotal.getText()
     const subTotalInNumber = await utility.covertTextToNumber(subTotal);
     return subTotalInNumber;
   }
